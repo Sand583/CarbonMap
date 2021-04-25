@@ -63,3 +63,11 @@ var total = carbonpx.reduceRegion({
 var tc = total.getNumber('carbon');
 
 print('Total carbon: ', tc, 'Megagram');
+
+var market = 20;
+
+var currency = 'USD';
+
+var price = tc.multiply(market);
+
+print('Total carbon value: ', price, currency);
