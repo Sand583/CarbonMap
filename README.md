@@ -1,5 +1,6 @@
 # The Value of Forest
 Inspiration
+
 Forests cover about 30% of the planet. The ecosystems they create play an essential role for life on earth. However deforestation is clearing earths forests on a massive scale. At the current rate of destruction the worlds rainforests could completely disappear within a hundred years.
 
 How can we prevent the destruction of forests?
@@ -27,3 +28,5 @@ Google Earth Engine
 
 What's next for The Value of Forest
 This is a proof of concept to connect community groups safeguarding forest and investors. In the future, we can add more visualization as dashboard for both groups. It can also be developed as an independent forest donation/investment platform. The data can also be used by philanthropies to monitor their investments.
+
+Try it: https://safran-yusri.users.earthengine.app/view/valueforest
