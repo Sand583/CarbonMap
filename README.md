@@ -35,5 +35,4 @@ Built With
 google-earth-engine
 javascript
 
-Try it out
- safran-yusri.users.earthengine.app
+Try it out: safran-yusri.users.earthengine.app/view/valueforest
