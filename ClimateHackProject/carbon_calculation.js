@@ -83,6 +83,9 @@ var price = tc.multiply(market);
 
 var p = price.getInfo();
 
+var forest = 'Juru Seberang Community Forest';
+var url = 'https://hkmseberangbersatu.com';
+
 print('Total carbon value: ', p, currency);
 
 // UI
@@ -183,8 +186,8 @@ function makeLegend2 (viridis) {
   return ui.Panel().add(panel2).add(thumb);
 }
 
-var extLabel = ui.Label({value:'Mangrove Extent ',
-style: {fontWeight: 'bold', fontSize: '16px', margin: '10px 5px'}
+var donate = ui.Label({value: forest,
+style: {fontWeight: 'bold', fontSize: '16px', margin: '10px 5px'}, targetUrl: url
 });
 
 var carbonLabel = ui.Label({value:'This area contain a total of'+ tci + ' '+ ' Megagram of Above Ground Biomass Carbon.' +
@@ -196,4 +199,5 @@ style: {fontWeight: 'bold', fontSize: '16px', margin: '10px 5px'}
 panel
       .add(carbonLabel)
       .add(makeLegend2(viridis))
+      .add(donate)
 ;
