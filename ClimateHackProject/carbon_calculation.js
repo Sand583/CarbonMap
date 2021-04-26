@@ -1,5 +1,12 @@
 
-Map.centerObject(aoi, 11);
+//Set up a satellite background
+Map.setOptions('Satellite');
+
+//Center the map to AOI
+Map.centerObject(aoi,13);
+
+//Change style of cursor to 'crosshair'
+Map.style().set('cursor', 'crosshair');
 
 // LANDSAT 8
 function maskL8sr(image) {
@@ -64,6 +71,8 @@ var total = carbonpx.reduceRegion({
 
 var tc = total.getNumber('carbon');
 
+var tci = tc.getInfo();
+
 print('Total carbon: ', tc, 'Megagram');
 
 var market = 20;
@@ -72,7 +81,9 @@ var currency = 'USD';
 
 var price = tc.multiply(market);
 
-print('Total carbon value: ', price, currency);
+var p = price.getInfo();
+
+print('Total carbon value: ', p, currency);
 
 // UI
 
@@ -122,17 +133,67 @@ inspector.add(ui.Label({
 });
 
 // Generate main panel and add it to the map.
-var panel = ui.Panel({style: {width:'33.333%'}});
+var panel = ui.Panel({style: {width:'256px'}});
 ui.root.insert(0,panel);
 
 // Define title and description.
-var intro = ui.Label('Carbon Map ',
+var intro = ui.Label('The Value of Forest ',
   {fontWeight: 'bold', fontSize: '24px', margin: '10px 5px'}
 );
-var subtitle = ui.Label('This area contain'+ 
-  ' Megagram.'+
-  ' Select from multiple area of interest and type of visualization; single year binary '+
-  ' or change over time.', {});
+var subtitle = ui.Label('This app is for valuating forest value based on its carbon stock. Please consider donating or visiting this area to support its conservation'
+  , {});
 
 // Add title and description to the panel.  
 panel.add(intro).add(subtitle);
+
+var carbonviz = {palette: ['d9f0a3', 'addd8e', '78c679', '41ab5d', '238443', '005a32']};
+var viridis = {min: 0 , max : 200,palette : ['#481567FF','#482677FF','#453781FF','#404788FF','#39568CFF',
+                                              '#33638DFF','#2D708EFF','#287D8EFF','#238A8DFF','#1F968BFF',
+                                              '#20A387FF','#29AF7FFF','#3CBB75FF','#55C667FF',
+                                              '#73D055FF','#95D840FF','#B8DE29FF','#DCE319FF','#FDE725FF','fd2206' 
+]};
+
+Map.addLayer(carbon, viridis, 'carbon');
+
+//Carbon Legend
+///////////////
+
+// This uses function to construct a legend for the given single-band vis
+// parameters.  Requires that the vis parameters specify 'min' and 
+// 'max' but not 'bands'.
+function makeLegend2 (viridis) {
+  var lon = ee.Image.pixelLonLat().select('longitude');
+  var gradient = lon.multiply((viridis.max-viridis.min)/100.0).add(viridis.min);
+  var legendImage = gradient.visualize(viridis);
+  
+  var thumb = ui.Thumbnail({
+    image: legendImage, 
+    params: {bbox:'0,0,100,8', dimensions:'256x20'},  
+    style: {position: 'bottom-center'}
+  });
+  var panel2 = ui.Panel({
+    widgets: [
+      ui.Label('Megagram C'), 
+      ui.Label({style: {stretch: 'horizontal'}}), 
+      ui.Label('200 tonnes C/Ha')
+    ],
+    layout: ui.Panel.Layout.flow('horizontal'),
+    style: {stretch: 'horizontal', maxWidth: '270px', padding: '0px 0px 0px 8px'}
+  });
+  return ui.Panel().add(panel2).add(thumb);
+}
+
+var extLabel = ui.Label({value:'Mangrove Extent ',
+style: {fontWeight: 'bold', fontSize: '16px', margin: '10px 5px'}
+});
+
+var carbonLabel = ui.Label({value:'This area contain a total of'+ tci + ' '+ ' Megagram of Above Ground Biomass Carbon.' +
+  ' Equal to '+  currency + p +'',
+style: {fontWeight: 'bold', fontSize: '16px', margin: '10px 5px'}
+});
+
+
+panel
+      .add(carbonLabel)
+      .add(makeLegend2(viridis))
+;
