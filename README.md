@@ -31,8 +31,6 @@ Google Earth Engine
 What's next for The Value of Forest
 This is a proof of concept which connects community groups safeguarding forests with investors. In the future, we can add more interactive visualization on the dashboard for both groups. It can also be developed as an independent forest donation/investment platform. The data can also be used by philanthropies to monitor their investments.
 
-Built With
-google-earth-engine
-javascript
+Built With google-earth-engine & javascript
 
 Try it out: https://safran-yusri.users.earthengine.app/view/valueforest
